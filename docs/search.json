@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "interest_calcs",
+    "section": "",
+    "text": "Just bundling up all interest calc related scripts/functions I’ve used at TH\nDocumentation",
+    "crumbs": [
+      "interest_calcs"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "interest_calcs",
+    "section": "Installation",
+    "text": "Installation\n!git clone https://github.com/pyronone/interest_calcs.git\n%cd './interest_calcs'\n!pip install -e \".[dev]\"",
+    "crumbs": [
+      "interest_calcs"
+    ]
+  },
+  {
+    "objectID": "index.html#quick-example",
+    "href": "index.html#quick-example",
+    "title": "interest_calcs",
+    "section": "Quick Example",
+    "text": "Quick Example\n\n\nCode\n# * DOC\nfrom interest_calcs import srs_pv as spv\n\npv, _ = spv.calc_pv(\n    monthly_pmt=74,\n    int_rate_input=2.3,\n    num_periods=40,\n    first_pmt_date=\"1-may-2020\",\n    amt_inputs=[(80.58, \"1-may-2021\")],  # amts change\n    _export=False,\n)\npv\n\n\n3028.87",
+    "crumbs": [
+      "interest_calcs"
+    ]
+  },
+  {
+    "objectID": "stco_pen_retro.html",
+    "href": "stco_pen_retro.html",
+    "title": "02_stco_pen_retro",
+    "section": "",
+    "text": "00 stco pen retro\n\nsource\n\nload_rates\n\n load_rates (src:str='c:\\\\users\\\\ronal\\\\desktop\\\\interest_calcs\\\\interest_\n             calcs\\\\.\\\\../dat/int_rates.csv')\n\n…\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nsrc\nstr\nc:_calcs_calcs.../dat/int_rates.csv\nstr\n\n\nReturns\ndict\n\ndict\n\n\n\n\n\nCode\n# * DOC\nRATES = load_rates()\nRATES\n\n\nLoaded rates for 2002 to 2024\n\n\n{2002: 0.003193314,\n 2003: 0.003096709,\n 2004: 0.002458159,\n 2005: 0.00223889,\n 2006: 0.002027243,\n 2007: 0.002393245,\n 2008: 0.002539236,\n 2009: 0.002312039,\n 2010: 0.001454967,\n 2011: 0.001520552,\n 2012: 0.001413952,\n 2013: 0.001307227,\n 2014: 0.001200377,\n 2015: 0.001200377,\n 2016: 0.001035746,\n 2017: 0.00096981,\n 2018: 0.000837795,\n 2019: 0.000986299,\n 2020: 0.001200377,\n 2021: 0.000813021,\n 2022: 0.000622862,\n 2023: 0.002100561,\n 2024: 0.002547339}\n\n\n\nsource\n\n\nget_breakdown\n\n get_breakdown (pmt_date:pandas._libs.tslibs.timestamps.Timestamp,\n                dor:pandas._libs.tslibs.timestamps.Timestamp)\n\nFind number of years included in the retro payment and number of months for each year\n\n\n\n\n\n\n\n\n\nType\nDetails\n\n\n\n\npmt_date\nTimestamp\npd.Timestamp - can be formatted as str\n\n\ndor\nTimestamp\npd.Timestamp - can be formatted as str\n\n\nReturns\ndict\ndict[int, int] - num months per year the retro payment spans\n\n\n\n\n\nCode\n# * TEST\nassert get_breakdown(pmt_date=\"1-dec-2023\", dor=\"1-jan-2023\") == {2023: 11}\nassert get_breakdown(pmt_date=\"1-dec-2023\", dor=\"1-jan-2021\") == {\n    2021: 12,\n    2022: 12,\n    2023: 11,\n}\n\n\n\nsource\n\n\ncalc_stco_pen_retro\n\n calc_stco_pen_retro (dor:pandas._libs.tslibs.timestamps.Timestamp,\n                      pmt_date:pandas._libs.tslibs.timestamps.Timestamp,\n                      pmt_amt:Union[float,int], bridge_end:pandas._libs.ts\n                      libs.timestamps.Timestamp=None)\n\n…\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ndor\nTimestamp\n\npd.Timestamp - can be formatted as str\n\n\npmt_date\nTimestamp\n\npd.Timestamp - can be formatted as str\n\n\npmt_amt\ntyping.Union[float, int]\n\nt.Union[float, int]\n\n\nbridge_end\nTimestamp\nNone\nOnly need to include if there’s a bridge that ended before pmt_date. Can be formatted as string. Should be last day of month - eg. ‘31-may-2023’\n\n\nReturns\nfloat\n\nfloat\n\n\n\n\n\nCode\n# * TEST\nassert (\n    calc_stco_pen_retro(dor=\"1-jan-2023\", pmt_date=\"1-feb-2024\", pmt_amt=2204)\n    + calc_stco_pen_retro(\n        dor=\"1-jan-2023\", pmt_date=\"1-feb-2024\", pmt_amt=900, bridge_end=\"31-may-2023\"\n    )\n    == 33696.97\n)\nassert (\n    calc_stco_pen_retro(dor=\"1-jan-2023\", pmt_date=\"1-feb-2024\", pmt_amt=1947.83)\n    + calc_stco_pen_retro(\n        dor=\"1-jan-2023\", pmt_date=\"1-feb-2024\", pmt_amt=900, bridge_end=\"31-jul-2023\"\n    )\n    == 32145.24\n)",
+    "crumbs": [
+      "02_stco_pen_retro"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "00_core",
+    "section": "",
+    "text": "00 init fxs\n\nsource\n\nyaml_helper\n\n yaml_helper (fpath:str='./config.yaml', mode:str='r', data:dict=None)\n\nHelper function to read, write, append to files in yaml format. Checks for duplicate keys if reading or appending.\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nfpath\nstr\n./config.yaml\nstr\n\n\nmode\nstr\nr\nstr - r / a / w\n\n\ndata\ndict\nNone\ndict - cannot be None if writing or appending\n\n\nReturns\ndict\n\ndict - data if reading, {‘r’: 0} if writing/appending\n\n\n\n\nsource\n\n\nfp\n\n fp (relative_fp:str, base_dir:str='.')\n\nFor referencing relative file paths in package directory.\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nrelative_fp\nstr\n\nstr - eg. “../dir/file.txt”\n\n\nbase_dir\nstr\n.\nstr\n\n\nReturns\nstr\n\nstr\n\n\n\n\n\n\n01 utils\n\nsource\n\nfix_round\n\n fix_round (num:Union[float,int], position:int=0)\n\nPython’s built-in round function can return unexpected results. See https://docs.python.org/3/library/functions.html#round. This function returns the same result as the Excel ROUND function..\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nnum\ntyping.Union[float, int]\n\nfloat or int\n\n\nposition\nint\n0\nint\n\n\nReturns\nfloat\n\nfloat\n\n\n\n\n\nCode\n# * TEST\nimport pytest\n\nwith pytest.raises(Exception, match=\"Invalid input\"):\n    fix_round(\"test\", 123)\n\nassert round(23.335, 2) == 23.34\nassert round(23.345, 2) == 23.34\nassert fix_round(23.345, 2) == 23.35\n\nassert round(-23.345, 2) == -23.34\nassert fix_round(-23.345, 2) == -23.35\n\nassert fix_round(1, 2) == 1\nassert isinstance((fix_round(1, 2)), float)\n\nassert fix_round(1.0, 2) == 1\nassert isinstance((fix_round(1.0, 2)), float)\n\nassert round(6789.2342335, 6) == 6789.234234\nassert round(6789.2342345, 6) == 6789.234234\nassert fix_round(6789.2342345, 6) == 6789.234235\n\nassert round(-6789.2342345, 6) == -6789.234234\nassert fix_round(-6789.2342345, 6) == -6789.234235\n\nassert fix_round(0.0, 2) == 0.0\nassert fix_round(-0.0, 2) == 0.0",
+    "crumbs": [
+      "00_core"
+    ]
+  },
+  {
+    "objectID": "srs_pv.html",
+    "href": "srs_pv.html",
+    "title": "01_srs_pv",
+    "section": "",
+    "text": "00 srs pv calc\n\nsource\n\ncalc_pv\n\n calc_pv (monthly_pmt:float, int_rate_input:float, num_periods:int,\n          first_pmt_date:str, amt_inputs:list=None, _export:bool=True)\n\nAssumes constant interest rate\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nmonthly_pmt\nfloat\n\nfloat\n\n\nint_rate_input\nfloat\n\npct - eg. 4.1, 2.3, etc.\n\n\nnum_periods\nint\n\nint\n\n\nfirst_pmt_date\nstr\n\nstr representation of date - eg. ‘1-may-2020’\n\n\namt_inputs\nlist\nNone\nlist[tuple] - where each tuple has 2 elements: new amount and effective date. if the amounts are constant, use None\n\n\n_export\nbool\nTrue\nif True, exports excel file showing work\n\n\nReturns\ntuple\n\n(pv amount, df showing work)\n\n\n\n\n\nCode\n# * TEST\npv, _ = calc_pv(\n    monthly_pmt=1389.93,\n    int_rate_input=4.1,\n    num_periods=64,\n    first_pmt_date=\"1-may-2020\",\n    amt_inputs=None,  # constant amt\n    _export=False,\n)\nassert pv == 80203.86\n\n# changing amts\npv, _ = calc_pv(\n    monthly_pmt=74,\n    int_rate_input=2.3,\n    num_periods=40,\n    first_pmt_date=\"1-may-2020\",\n    amt_inputs=[(80.58, \"1-may-2021\")],\n    _export=False,\n)\nassert pv == 3028.87",
+    "crumbs": [
+      "01_srs_pv"
+    ]
+  },
+  {
+    "objectID": "ntcl_retro.html",
+    "href": "ntcl_retro.html",
+    "title": "03_ntcl_retro",
+    "section": "",
+    "text": "00 ntcl retro\n\nsource\n\ncalc_retro\n\n calc_retro (dor:pandas._libs.tslibs.timestamps.Timestamp,\n             pmt_date:pandas._libs.tslibs.timestamps.Timestamp,\n             monthly_pmt:float, rates:dict=None, amt_inputs:list=None,\n             _export:bool=True)\n\n…\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\ndor\nTimestamp\n\ncan be formatted as str\n\n\npmt_date\nTimestamp\n\ncan be formatted as str\n\n\nmonthly_pmt\nfloat\n\nfor 1st month(s), if amounts change\n\n\nrates\ndict\nNone\nCANSIM B14045\n\n\namt_inputs\nlist\nNone\nlist[tuple] - where each tuple has 2 elements: new amount and effective date. if the amounts are constant, use None\n\n\n_export\nbool\nTrue\nif True, exports excel file showing work\n\n\nReturns\nDataFrame\n\npd.DataFrame\n\n\n\n\n\nCode\n# * TEST\npmt_date = \"1-mar-2023\"\ndor = \"1-aug-2016\"\nmonthly_pmt = 651.86\namt_inputs = [(530.48, \"1-apr-2020\")]\n\ndf = calc_retro(dor, pmt_date, monthly_pmt, RATES, amt_inputs, False)\nassert fix_round(df.monthly_pen_w_int.sum(), 2) == 49785.65",
+    "crumbs": [
+      "03_ntcl_retro"
+    ]
+  }
+]

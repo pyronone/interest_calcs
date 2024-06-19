@@ -17,7 +17,7 @@ def _get_dt_suffix() -> str:
     from datetime import datetime
 
     now = datetime.now()
-    return now.strftime("_%Y%m%d_%H%M")
+    return now.strftime("_%Y%m%d_%H%M%S%f")
 
 # ...
 # ...
@@ -80,6 +80,59 @@ def _export_df(df: pd.DataFrame) -> None:
 
 # ...
 # ...
+def _num_months(first_pmt: pd.Timestamp, pmt_date: pd.Timestamp) -> int:
+    first_pmt = pd.to_datetime(first_pmt)
+    pmt_date = pd.to_datetime(pmt_date)
+    date_list = pd.date_range(start=first_pmt, end=pmt_date, freq="MS").tolist()
+    df = pd.DataFrame()
+    df["months"] = date_list
+    return len(df[:-1])
+
+# ...
+# ...
+def _get_first_of_curr_month() -> pd.Timestamp:
+    current_date = pd.Timestamp.now()
+    return pd.Timestamp(current_date.year, current_date.month, 1)
+
+# ...
+# ...
+def _roll_fwd_amts(df: pd.DataFrame) -> pd.DataFrame:
+    first_pmt_date = df["month"].tolist()[0]
+
+    start_date = _get_first_of_curr_month()
+
+    try:
+        if WORK_ENV:
+            start_date = pd.to_datetime("1-jun-2024")
+    except NameError:
+        pass
+
+    months = [start_date + pd.DateOffset(months=i) for i in range(60)]
+    month_starts = [m.to_period("M").start_time for m in months]
+
+    t_df = pd.DataFrame()
+    t_df["pmt_date"] = month_starts
+    t_df["num_months"] = t_df["pmt_date"].apply(
+        lambda x: (_num_months(first_pmt_date, x))
+    )
+
+    pv = fix_round(df.iloc[0, -1], 2)
+    interest_rate = df["monthly_rate"].tolist()[0]
+
+    def _get_roll_fwd_amt(tr: pd.Series, pv: float, interest_rate: float) -> float:
+        x = pv * ((1 + (interest_rate)) ** tr["num_months"])
+        return fix_round(x, 2)
+
+    t_df["amt_100pct"] = t_df.apply(
+        lambda x: _get_roll_fwd_amt(x, pv, interest_rate), axis=1
+    )
+
+    t_df["amt_71pct"] = t_df["amt_100pct"].apply(lambda x: fix_round(x * 0.71, 2))
+
+    return t_df
+
+# ...
+# ...
 def calc_pv(
     monthly_pmt: float,
     int_rate_input: float,
@@ -87,6 +140,7 @@ def calc_pv(
     first_pmt_date: str,
     amt_inputs: list[tuple] = None,
     _export: bool = True,
+    _export_rf: bool = True,
 ) -> tuple:
     """Assumes constant interest rate
 
@@ -104,11 +158,13 @@ def calc_pv(
         list[tuple] - where each tuple has 2 elements: new amount and effective date. if the amounts are constant, use None
     _export : bool, optional
         if True, exports excel file showing work
+    _export_rf : bool, optional
+        if True, exports excel file with roll_fwd amts
 
     Returns
     -------
     tuple
-        (pv amount, df showing work)
+        (pv amount, df showing work, rf df)
     """
     interest_rate = _get_monthly_compounded_rate(int_rate_input)
     compounded_ints = []
@@ -125,4 +181,8 @@ def calc_pv(
     )
     if _export:
         _export_df(df)
-    return fix_round(df.iloc[0, -1], 2), df
+
+    if _export_rf:
+        _export_df(_roll_fwd_amts(df))
+
+    return fix_round(df.iloc[0, -1], 2), df, _roll_fwd_amts(df)

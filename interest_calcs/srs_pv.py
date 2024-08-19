@@ -1,7 +1,7 @@
 # ...
 
 # ...
-__all__ = ['PKG_DIR', 'calc_pv']
+__all__ = ['PKG_DIR', 'calc_pv', 'pv_calc']
 
 # ...
 import pandas as pd
@@ -14,6 +14,13 @@ PKG_DIR = pkg_resources.resource_filename(__name__, ".")
 # ...
 # ...
 def _get_dt_suffix() -> str:
+    """...
+
+    Returns
+    -------
+    str
+        str
+    """
     from datetime import datetime
 
     now = datetime.now()
@@ -46,6 +53,28 @@ def _create_df(
     interest_rate: float,
     num_periods: int,
 ) -> pd.DataFrame:
+    """...
+
+    Parameters
+    ----------
+    compounded_ints : list
+        list
+    monthly_pmt : float
+        float
+    first_pmt_date : str
+        str
+    amt_inputs : list[tuple]
+        list[tuple]
+    interest_rate : float
+        float
+    num_periods : int
+        int
+
+    Returns
+    -------
+    pd.DataFrame
+        pd.DataFrame
+    """
     df = pd.DataFrame()
     df["compounded_int"] = compounded_ints[::-1]
     df["amt"] = [monthly_pmt] * len(df)
@@ -75,12 +104,33 @@ def _create_df(
 
 
 def _export_df(df: pd.DataFrame) -> None:
+    """...
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        pd.DataFrame
+    """
     suffix = _get_dt_suffix()
     df.to_excel(f"work{suffix}.xlsx", index=False)
 
 # ...
 # ...
 def _num_months(first_pmt: pd.Timestamp, pmt_date: pd.Timestamp) -> int:
+    """...
+
+    Parameters
+    ----------
+    first_pmt : pd.Timestamp
+        pd.Timestamp
+    pmt_date : pd.Timestamp
+        pd.Timestamp
+
+    Returns
+    -------
+    int
+        int
+    """
     first_pmt = pd.to_datetime(first_pmt)
     pmt_date = pd.to_datetime(pmt_date)
     date_list = pd.date_range(start=first_pmt, end=pmt_date, freq="MS").tolist()
@@ -91,12 +141,31 @@ def _num_months(first_pmt: pd.Timestamp, pmt_date: pd.Timestamp) -> int:
 # ...
 # ...
 def _get_first_of_curr_month() -> pd.Timestamp:
+    """...
+
+    Returns
+    -------
+    pd.Timestamp
+        pd.Timestamp
+    """
     current_date = pd.Timestamp.now()
     return pd.Timestamp(current_date.year, current_date.month, 1)
 
 # ...
 # ...
 def _roll_fwd_amts(df: pd.DataFrame) -> pd.DataFrame:
+    """...
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        pd.DataFrame
+
+    Returns
+    -------
+    pd.DataFrame
+        pd.DataFrame
+    """
     first_pmt_date = df["month"].tolist()[0]
 
     start_date = _get_first_of_curr_month()
@@ -129,7 +198,7 @@ def _roll_fwd_amts(df: pd.DataFrame) -> pd.DataFrame:
 
     t_df["amt_71pct"] = t_df["amt_100pct"].apply(lambda x: fix_round(x * 0.71, 2))
 
-    return t_df
+    return t_df.copy()
 
 # ...
 # ...
@@ -186,3 +255,59 @@ def calc_pv(
         _export_df(_roll_fwd_amts(df))
 
     return fix_round(df.iloc[0, -1], 2), df, _roll_fwd_amts(df)
+
+# ...
+# ...
+def _sort_amt_input_tuples(amt_inputs: list[tuple]) -> list[tuple]:
+    """...
+
+    Parameters
+    ----------
+    amt_inputs : list[tuple]
+        list[tuple]
+
+    Returns
+    -------
+    list[tuple]
+        list[tuple]
+    """
+    sorted_tups = [list(x) for x in amt_inputs]
+    for t_list in sorted_tups:
+        t_list[0] = float(t_list[0])
+        t_list.append(pd.to_datetime(t_list[1]))
+    sorted_tups.sort(key=lambda x: x[2])
+    return [tuple(x[:2]) for x in sorted_tups]
+
+# ...
+# ...
+def pv_calc(int_rate_input: float, num_periods: int, amt_inputs: list[tuple]) -> tuple:
+    """Wrapper around `calc_pv` to simplify inputs. Always exports dfs showing work and roll fwd amts.
+
+    Parameters
+    ----------
+    int_rate_input : float
+        pct - eg. 4.1, 2.3, etc.
+    num_periods : int
+        int
+    amt_inputs : list[tuple]
+        list[tuple] - where each tuple has 2 elements: amount and effective date.
+
+    Returns
+    -------
+    tuple
+        (pv amount, df showing work, rf df)
+    """
+    t_list = _sort_amt_input_tuples(amt_inputs)
+    earliest_amts = t_list[0]
+    monthly_pmt = earliest_amts[0]
+    first_pmt_date = earliest_amts[1]
+
+    if len(t_list) == 1:
+        amt_inputs = None
+    else:
+        amt_inputs = t_list[1:]
+
+    pv, work_df, rf_df = calc_pv(
+        monthly_pmt, int_rate_input, num_periods, first_pmt_date, amt_inputs, True, True
+    )
+    return (pv, work_df, rf_df)

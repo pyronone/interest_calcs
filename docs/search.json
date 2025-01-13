@@ -30,6 +30,16 @@
     ]
   },
   {
+    "objectID": "index.html#changelog",
+    "href": "index.html#changelog",
+    "title": "interest_calcs",
+    "section": "Changelog",
+    "text": "Changelog\n\n0.1.1\n\nremoved unused modules",
+    "crumbs": [
+      "interest_calcs"
+    ]
+  },
+  {
     "objectID": "core.html",
     "href": "core.html",
     "title": "00_core",

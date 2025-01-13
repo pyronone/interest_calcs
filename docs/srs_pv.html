@@ -166,18 +166,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">01_srs_pv</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./stco_pen_retro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">02_stco_pen_retro</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./ntcl_retro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">03_ntcl_retro</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -235,7 +223,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="main-fx" class="level2">
 <h2 class="anchored" data-anchor-id="main-fx">main fx</h2>
 <hr>
-<p><a href="https://github.com/pyronone/interest_calcs/blob/main/interest_calcs/srs_pv.py#L205" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="calc_pv" class="level3">
 <h3 class="anchored" data-anchor-id="calc_pv">calc_pv</h3>
 <blockquote class="blockquote">
@@ -313,29 +300,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-5" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># * </span><span class="al">TEST</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pv, _, __ <span class="op">=</span> calc_pv(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    monthly_pmt<span class="op">=</span><span class="fl">1389.93</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    int_rate_input<span class="op">=</span><span class="fl">4.1</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    num_periods<span class="op">=</span><span class="dv">64</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    first_pmt_date<span class="op">=</span><span class="st">"1-may-2020"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    amt_inputs<span class="op">=</span><span class="va">None</span>,  <span class="co"># constant amt</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    _export<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    _export_rf<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> pv <span class="op">==</span> <span class="fl">80203.86</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># changing amts</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>pv, _, __ <span class="op">=</span> calc_pv(</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    monthly_pmt<span class="op">=</span><span class="dv">74</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    int_rate_input<span class="op">=</span><span class="fl">2.3</span>,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    num_periods<span class="op">=</span><span class="dv">40</span>,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    first_pmt_date<span class="op">=</span><span class="st">"1-may-2020"</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    amt_inputs<span class="op">=</span>[(<span class="fl">80.58</span>, <span class="st">"1-may-2021"</span>)],</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    _export<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    _export_rf<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> pv <span class="op">==</span> <span class="fl">3028.87</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pv, _, __ <span class="op">=</span> calc_pv(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    monthly_pmt<span class="op">=</span><span class="fl">1389.93</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    int_rate_input<span class="op">=</span><span class="fl">4.1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    num_periods<span class="op">=</span><span class="dv">64</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    first_pmt_date<span class="op">=</span><span class="st">"1-may-2020"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    amt_inputs<span class="op">=</span><span class="va">None</span>,  <span class="co"># constant amt</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    _export<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    _export_rf<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> pv <span class="op">==</span> <span class="fl">80203.86</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># changing amts</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>pv, _, __ <span class="op">=</span> calc_pv(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    monthly_pmt<span class="op">=</span><span class="dv">74</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    int_rate_input<span class="op">=</span><span class="fl">2.3</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    num_periods<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    first_pmt_date<span class="op">=</span><span class="st">"1-may-2020"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    amt_inputs<span class="op">=</span>[(<span class="fl">80.58</span>, <span class="st">"1-may-2021"</span>)],</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    _export<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    _export_rf<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> pv <span class="op">==</span> <span class="fl">3028.87</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -343,13 +329,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="main-wrapper" class="level2">
 <h2 class="anchored" data-anchor-id="main-wrapper">main wrapper</h2>
 <hr>
-<p><a href="https://github.com/pyronone/interest_calcs/blob/main/interest_calcs/srs_pv.py#L283" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="pv_calc" class="level3">
 <h3 class="anchored" data-anchor-id="pv_calc">pv_calc</h3>
 <blockquote class="blockquote">
 <pre><code> pv_calc (int_rate_input:float, num_periods:int, amt_inputs:list[tuple])</code></pre>
 </blockquote>
-<p>Wrapper around <a href="https://pyronone.github.io/interest_calcs/srs_pv.html#calc_pv"><code>calc_pv</code></a> to simplify inputs. Always exports dfs showing work and roll fwd amts.</p>
+<p>Wrapper around <code>calc_pv</code> to simplify inputs. Always exports dfs showing work and roll fwd amts.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 9%">
@@ -389,49 +374,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-8" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># * </span><span class="al">TEST</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>int_rate_input <span class="op">=</span> <span class="fl">2.3</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>num_periods <span class="op">=</span> <span class="dv">40</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>amt_inputs <span class="op">=</span> [(<span class="fl">80.58</span>, <span class="st">"1-may-2021"</span>), (<span class="dv">74</span>, <span class="st">"1-may-2020"</span>)]</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pv_calc(int_rate_input, num_periods, amt_inputs)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> res[<span class="dv">0</span>] <span class="op">==</span> <span class="fl">3028.87</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>int_rate_input <span class="op">=</span> <span class="fl">2.3</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>num_periods <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>amt_inputs <span class="op">=</span> [(<span class="fl">80.58</span>, <span class="st">"1-may-2021"</span>), (<span class="dv">74</span>, <span class="st">"1-may-2020"</span>)]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pv_calc(int_rate_input, num_periods, amt_inputs)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> res[<span class="dv">0</span>] <span class="op">==</span> <span class="fl">3028.87</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="cell-9" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># * </span><span class="al">TEST</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>int_rate_input <span class="op">=</span> <span class="fl">4.1</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>num_periods <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>amt_inputs <span class="op">=</span> [(<span class="fl">1389.93</span>, <span class="st">"1-may-2020"</span>)]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pv_calc(int_rate_input, num_periods, amt_inputs)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> res[<span class="dv">0</span>] <span class="op">==</span> <span class="fl">80203.86</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>int_rate_input <span class="op">=</span> <span class="fl">4.1</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>num_periods <span class="op">=</span> <span class="dv">64</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>amt_inputs <span class="op">=</span> [(<span class="fl">1389.93</span>, <span class="st">"1-may-2020"</span>)]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pv_calc(int_rate_input, num_periods, amt_inputs)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> res[<span class="dv">0</span>] <span class="op">==</span> <span class="fl">80203.86</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div id="cell-10" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># * DOC</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>int_rate_input <span class="op">=</span> <span class="fl">4.4</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>num_periods <span class="op">=</span> <span class="dv">19</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>amt_inputs <span class="op">=</span> [(<span class="fl">509.88</span>, <span class="st">"1-apr-2023"</span>)]</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pv_calc(int_rate_input, num_periods, amt_inputs)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> res[<span class="dv">0</span>] <span class="op">==</span> <span class="fl">9381.67</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>int_rate_input <span class="op">=</span> <span class="fl">4.4</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>num_periods <span class="op">=</span> <span class="dv">19</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>amt_inputs <span class="op">=</span> [(<span class="fl">509.88</span>, <span class="st">"1-apr-2023"</span>)]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> pv_calc(int_rate_input, num_periods, amt_inputs)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> res[<span class="dv">0</span>] <span class="op">==</span> <span class="fl">9381.67</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>9381.67</code></pre>
 </div>
 </div>
 <div id="cell-11" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># * DOC</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -647,11 +622,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="cell-12" class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># * DOC</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -669,423 +640,423 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>2024-06-01</td>
-<td>14</td>
-<td>9865.01</td>
-<td>7004.16</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>2024-07-01</td>
-<td>15</td>
-<td>9900.47</td>
-<td>7029.33</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>2024-08-01</td>
-<td>16</td>
-<td>9936.06</td>
-<td>7054.60</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>2024-09-01</td>
-<td>17</td>
-<td>9971.78</td>
-<td>7079.96</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>2024-10-01</td>
-<td>18</td>
-<td>10007.62</td>
-<td>7105.41</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2024-11-01</td>
-<td>19</td>
-<td>10043.60</td>
-<td>7130.96</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>2024-12-01</td>
-<td>20</td>
-<td>10079.70</td>
-<td>7156.59</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
 <td>2025-01-01</td>
 <td>21</td>
 <td>10115.93</td>
 <td>7182.31</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
 <td>2025-02-01</td>
 <td>22</td>
 <td>10152.30</td>
 <td>7208.13</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
 <td>2025-03-01</td>
 <td>23</td>
 <td>10188.79</td>
 <td>7234.04</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
 <td>2025-04-01</td>
 <td>24</td>
 <td>10225.42</td>
 <td>7260.05</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
 <td>2025-05-01</td>
 <td>25</td>
 <td>10262.18</td>
 <td>7286.15</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
 <td>2025-06-01</td>
 <td>26</td>
 <td>10299.07</td>
 <td>7312.34</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
 <td>2025-07-01</td>
 <td>27</td>
 <td>10336.09</td>
 <td>7338.62</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
 <td>2025-08-01</td>
 <td>28</td>
 <td>10373.25</td>
 <td>7365.01</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
 <td>2025-09-01</td>
 <td>29</td>
 <td>10410.53</td>
 <td>7391.48</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
 <td>2025-10-01</td>
 <td>30</td>
 <td>10447.96</td>
 <td>7418.05</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
 <td>2025-11-01</td>
 <td>31</td>
 <td>10485.52</td>
 <td>7444.72</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
 <td>2025-12-01</td>
 <td>32</td>
 <td>10523.21</td>
 <td>7471.48</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
 <td>2026-01-01</td>
 <td>33</td>
 <td>10561.04</td>
 <td>7498.34</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">20</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
 <td>2026-02-01</td>
 <td>34</td>
 <td>10599.00</td>
 <td>7525.29</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">21</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
 <td>2026-03-01</td>
 <td>35</td>
 <td>10637.10</td>
 <td>7552.34</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">22</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
 <td>2026-04-01</td>
 <td>36</td>
 <td>10675.34</td>
 <td>7579.49</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">23</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
 <td>2026-05-01</td>
 <td>37</td>
 <td>10713.71</td>
 <td>7606.73</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">24</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
 <td>2026-06-01</td>
 <td>38</td>
 <td>10752.23</td>
 <td>7634.08</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">25</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
 <td>2026-07-01</td>
 <td>39</td>
 <td>10790.88</td>
 <td>7661.52</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">26</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
 <td>2026-08-01</td>
 <td>40</td>
 <td>10829.67</td>
 <td>7689.07</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">27</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
 <td>2026-09-01</td>
 <td>41</td>
 <td>10868.60</td>
 <td>7716.71</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">28</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
 <td>2026-10-01</td>
 <td>42</td>
 <td>10907.67</td>
 <td>7744.45</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">29</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
 <td>2026-11-01</td>
 <td>43</td>
 <td>10946.88</td>
 <td>7772.28</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">30</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
 <td>2026-12-01</td>
 <td>44</td>
 <td>10986.23</td>
 <td>7800.22</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">31</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
 <td>2027-01-01</td>
 <td>45</td>
 <td>11025.72</td>
 <td>7828.26</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">32</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
 <td>2027-02-01</td>
 <td>46</td>
 <td>11065.36</td>
 <td>7856.41</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">33</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
 <td>2027-03-01</td>
 <td>47</td>
 <td>11105.13</td>
 <td>7884.64</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">34</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
 <td>2027-04-01</td>
 <td>48</td>
 <td>11145.05</td>
 <td>7912.99</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">35</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
 <td>2027-05-01</td>
 <td>49</td>
 <td>11185.12</td>
 <td>7941.44</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">36</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">29</td>
 <td>2027-06-01</td>
 <td>50</td>
 <td>11225.32</td>
 <td>7969.98</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
 <td>2027-07-01</td>
 <td>51</td>
 <td>11265.68</td>
 <td>7998.63</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">38</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
 <td>2027-08-01</td>
 <td>52</td>
 <td>11306.17</td>
 <td>8027.38</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">39</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
 <td>2027-09-01</td>
 <td>53</td>
 <td>11346.82</td>
 <td>8056.24</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">40</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">33</td>
 <td>2027-10-01</td>
 <td>54</td>
 <td>11387.61</td>
 <td>8085.20</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">41</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">34</td>
 <td>2027-11-01</td>
 <td>55</td>
 <td>11428.54</td>
 <td>8114.26</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">42</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">35</td>
 <td>2027-12-01</td>
 <td>56</td>
 <td>11469.62</td>
 <td>8143.43</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">43</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">36</td>
 <td>2028-01-01</td>
 <td>57</td>
 <td>11510.85</td>
 <td>8172.70</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">44</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">37</td>
 <td>2028-02-01</td>
 <td>58</td>
 <td>11552.23</td>
 <td>8202.08</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">45</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">38</td>
 <td>2028-03-01</td>
 <td>59</td>
 <td>11593.76</td>
 <td>8231.57</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">46</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">39</td>
 <td>2028-04-01</td>
 <td>60</td>
 <td>11635.44</td>
 <td>8261.16</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">47</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">40</td>
 <td>2028-05-01</td>
 <td>61</td>
 <td>11677.26</td>
 <td>8290.85</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">48</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">41</td>
 <td>2028-06-01</td>
 <td>62</td>
 <td>11719.24</td>
 <td>8320.66</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">49</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">42</td>
 <td>2028-07-01</td>
 <td>63</td>
 <td>11761.37</td>
 <td>8350.57</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">50</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">43</td>
 <td>2028-08-01</td>
 <td>64</td>
 <td>11803.65</td>
 <td>8380.59</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">51</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">44</td>
 <td>2028-09-01</td>
 <td>65</td>
 <td>11846.08</td>
 <td>8410.72</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">52</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">45</td>
 <td>2028-10-01</td>
 <td>66</td>
 <td>11888.66</td>
 <td>8440.95</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">53</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">46</td>
 <td>2028-11-01</td>
 <td>67</td>
 <td>11931.40</td>
 <td>8471.29</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">54</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">47</td>
 <td>2028-12-01</td>
 <td>68</td>
 <td>11974.29</td>
 <td>8501.75</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">55</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">48</td>
 <td>2029-01-01</td>
 <td>69</td>
 <td>12017.33</td>
 <td>8532.30</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">56</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">49</td>
 <td>2029-02-01</td>
 <td>70</td>
 <td>12060.53</td>
 <td>8562.98</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">57</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">50</td>
 <td>2029-03-01</td>
 <td>71</td>
 <td>12103.88</td>
 <td>8593.75</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">58</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">51</td>
 <td>2029-04-01</td>
 <td>72</td>
 <td>12147.39</td>
 <td>8624.65</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">59</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">52</td>
 <td>2029-05-01</td>
 <td>73</td>
 <td>12191.06</td>
 <td>8655.65</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">53</td>
+<td>2029-06-01</td>
+<td>74</td>
+<td>12234.89</td>
+<td>8686.77</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">54</td>
+<td>2029-07-01</td>
+<td>75</td>
+<td>12278.87</td>
+<td>8718.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">55</td>
+<td>2029-08-01</td>
+<td>76</td>
+<td>12323.01</td>
+<td>8749.34</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">56</td>
+<td>2029-09-01</td>
+<td>77</td>
+<td>12367.30</td>
+<td>8780.78</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">57</td>
+<td>2029-10-01</td>
+<td>78</td>
+<td>12411.76</td>
+<td>8812.35</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">58</td>
+<td>2029-11-01</td>
+<td>79</td>
+<td>12456.38</td>
+<td>8844.03</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">59</td>
+<td>2029-12-01</td>
+<td>80</td>
+<td>12501.16</td>
+<td>8875.82</td>
 </tr>
 </tbody>
 </table>

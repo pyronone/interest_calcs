@@ -1,39 +1,13 @@
 # ...
 
-# ...
-__all__ = ['PKG_DIR', 'fp', 'yaml_helper', 'fix_round']
+# %% auto 0
+__all__ = ['yaml_helper', 'fix_round']
 
-# ...
-import os
+
+import math
 import typing as t
-import pkg_resources
+import pytest
 import yaml
-
-PKG_DIR = pkg_resources.resource_filename(__name__, ".")
-
-# ...
-# ...
-def fp(relative_fp: str, base_dir: str = PKG_DIR) -> str:
-    """For referencing relative file paths in package directory.
-
-    Parameters
-    ----------
-    relative_fp : str
-        str - eg. "../dir/file.txt"
-    base_dir : str, optional
-        str
-
-    Returns
-    -------
-    str
-        str
-    """
-    docs_mode = not os.path.exists(os.path.join(base_dir, relative_fp))
-
-    if docs_mode:
-        relative_fp = relative_fp.replace("..", ".", 1)
-
-    return os.path.join(base_dir, relative_fp)
 
 
 def yaml_helper(
@@ -92,8 +66,7 @@ def yaml_helper(
             f.write((yaml.dump(data, default_flow_style=False, sort_keys=False)))
         return {"r": 0}
 
-# ...
-# ...
+
 def fix_round(num: t.Union[float, int], position: int = 0) -> float:
     """Python's built-in `round` function can return unexpected results. See `https://docs.python.org/3/library/functions.html#round`. This function returns the same result as the Excel `ROUND` function..
 
@@ -109,8 +82,6 @@ def fix_round(num: t.Union[float, int], position: int = 0) -> float:
     float
         float
     """
-    import math
-
     if isinstance(num, (float, int)):
         multiplier = 10**position
         num = multiplier * num

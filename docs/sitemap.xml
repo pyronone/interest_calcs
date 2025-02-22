@@ -2,22 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pyronone.github.io/interest_calcs/index.html</loc>
-    <lastmod>2025-01-13T23:11:01.651Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pyronone.github.io/interest_calcs/stco_pen_retro.html</loc>
-    <lastmod>2025-01-13T22:32:22.998Z</lastmod>
+    <lastmod>2025-02-22T22:17:46.680Z</lastmod>
   </url>
   <url>
     <loc>https://pyronone.github.io/interest_calcs/core.html</loc>
-    <lastmod>2025-01-13T22:32:22.582Z</lastmod>
+    <lastmod>2025-02-22T21:53:09.734Z</lastmod>
   </url>
   <url>
-    <loc>https://pyronone.github.io/interest_calcs/srs_pv.html</loc>
-    <lastmod>2025-01-13T22:32:23.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pyronone.github.io/interest_calcs/ntcl_retro.html</loc>
-    <lastmod>2025-01-13T22:32:23.013Z</lastmod>
+    <loc>https://pyronone.github.io/interest_calcs/srs.html</loc>
+    <lastmod>2025-02-22T22:17:47.374Z</lastmod>
   </url>
 </urlset>

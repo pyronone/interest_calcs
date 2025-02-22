@@ -1,9 +1,12 @@
+"""..."""
+
 # ...
 
 # %% auto 0
-__all__ = ['calc_pv', 'pv_calc']
+__all__ = ['calc_pv']
 
 
+import os
 from datetime import datetime
 
 import pandas as pd
@@ -43,32 +46,10 @@ def _create_df(
     compounded_ints: list,
     monthly_pmt: float,
     first_pmt_date: str,
-    amt_inputs: list[tuple],
+    amt_inputs: list[tuple] | None,
     interest_rate: float,
     num_periods: int,
 ) -> pd.DataFrame:
-    """...
-
-    Parameters
-    ----------
-    compounded_ints : list
-        list
-    monthly_pmt : float
-        float
-    first_pmt_date : str
-        str
-    amt_inputs : list[tuple]
-        list[tuple]
-    interest_rate : float
-        float
-    num_periods : int
-        int
-
-    Returns
-    -------
-    pd.DataFrame
-        pd.DataFrame
-    """
     df = pd.DataFrame()
     df["compounded_int"] = compounded_ints[::-1]
     df["amt"] = [monthly_pmt] * len(df)
@@ -97,27 +78,37 @@ def _create_df(
     return df
 
 
-def _export_df(df: pd.DataFrame) -> None:
-    """export df showing work
+def _export_dfs(dfs: tuple[pd.DataFrame, pd.DataFrame]) -> None:
+    """...
 
     Parameters
     ----------
-    df : pd.DataFrame
-        pd.DataFrame
+    dfs : tuple[pd.DataFrame, pd.DataFrame]
+        tuple[pd.DataFrame, pd.DataFrame]
     """
+    work, rf = dfs
     suffix = _get_dt_suffix()
-    df.to_excel(f"work{suffix}.xlsx", index=False)
+
+    try:
+        os.mkdir("./work")
+    except FileExistsError:
+        pass
+
+    with pd.ExcelWriter(f"./work/work{suffix}.xlsx", engine="openpyxl") as writer:
+        work.to_excel(writer, sheet_name="work", index=False)
+        rf.to_excel(writer, sheet_name="rf", index=False)
 
 
-def _num_months(first_pmt: pd.Timestamp, pmt_date: pd.Timestamp) -> int:
+
+def _num_months(first_pmt: pd.Timestamp | str, pmt_date: pd.Timestamp | str) -> int:
     """does not include `pmt_date`
 
     Parameters
     ----------
     first_pmt : pd.Timestamp
-        pd.Timestamp - 1st of month
+        pd.Timestamp or string representation - 1st of month
     pmt_date : pd.Timestamp
-        pd.Timestamp - 1st of month
+        pd.Timestamp or string representation - 1st of month
 
     Returns
     -------
@@ -170,7 +161,7 @@ def _roll_fwd_amts(df: pd.DataFrame) -> pd.DataFrame:
         lambda x: (_num_months(first_pmt_date, x))
     )
 
-    pv = fix_round(df.iloc[0, -1], 2)
+    pv = fix_round(df.iloc[0, -1], 2)  # type: ignore
     interest_rate = df["monthly_rate"].tolist()[0]
 
     def _get_roll_fwd_amt(tr: pd.Series, pv: float, interest_rate: float) -> float:
@@ -186,12 +177,12 @@ def _roll_fwd_amts(df: pd.DataFrame) -> pd.DataFrame:
     return t_df.copy()
 
 
-def calc_pv(
+def _calc_pv(
     monthly_pmt: float,
     int_rate_input: float,
     num_periods: int,
     first_pmt_date: str,
-    amt_inputs: list[tuple] = None,
+    amt_inputs: list[tuple] | None = None,
     _export: bool = True,
     _export_rf: bool = True,
 ) -> tuple:
@@ -210,9 +201,7 @@ def calc_pv(
     amt_inputs : list[tuple], optional
         list[tuple] - where each tuple has 2 elements: new amount and effective date. if the amounts are constant, use None
     _export : bool, optional
-        if True, exports excel file showing work
-    _export_rf : bool, optional
-        if True, exports excel file with roll_fwd amts
+        export
 
     Returns
     -------
@@ -233,12 +222,9 @@ def calc_pv(
         num_periods,
     )
     if _export:
-        _export_df(df)
+        _export_dfs((df, _roll_fwd_amts(df)))
 
-    if _export_rf:
-        _export_df(_roll_fwd_amts(df))
-
-    return fix_round(df.iloc[0, -1], 2), df, _roll_fwd_amts(df)
+    return fix_round(df.iloc[0, -1], 2), df, _roll_fwd_amts(df)  # type: ignore
 
 
 def _sortInputTuples(amt_inputs: list[tuple]) -> list[tuple]:
@@ -262,13 +248,14 @@ def _sortInputTuples(amt_inputs: list[tuple]) -> list[tuple]:
     return [tuple(x[:2]) for x in sorted_tups]
 
 
-
-def pv_calc(int_rate_input: float, num_periods: int, amt_inputs: list[tuple]) -> tuple:
-    """Wrapper around `calc_pv` to simplify inputs. Always exports dfs showing work and roll fwd amts.
+def calc_pv(
+    int_rate_input: float | int, num_periods: int, amt_inputs: list[tuple]
+) -> tuple[float | int, pd.DataFrame, pd.DataFrame]:
+    """Calculate present value of remaining guarantee balance where amounts may not be constant but interest rates are. Exports dfs showing work and roll fwd amts.
 
     Parameters
     ----------
-    int_rate_input : float
+    int_rate_input : float | int
         pct - eg. 4.1, 2.3, etc.
     num_periods : int
         int
@@ -277,7 +264,7 @@ def pv_calc(int_rate_input: float, num_periods: int, amt_inputs: list[tuple]) ->
 
     Returns
     -------
-    tuple
+    tuple[float | int, pd.DataFrame, pd.DataFrame]
         (pv amount, df showing work, rf df)
     """
     t_list = _sortInputTuples(amt_inputs)
@@ -286,11 +273,17 @@ def pv_calc(int_rate_input: float, num_periods: int, amt_inputs: list[tuple]) ->
     first_pmt_date = earliest_amts[1]
 
     if len(t_list) == 1:
-        amt_inputs = None
+        _amt_inputs = None
     else:
-        amt_inputs = t_list[1:]
+        _amt_inputs = t_list[1:]
 
-    pv, work_df, rf_df = calc_pv(
-        monthly_pmt, int_rate_input, num_periods, first_pmt_date, amt_inputs, True, True
+    pv, work_df, rf_df = _calc_pv(
+        monthly_pmt,
+        int_rate_input,
+        num_periods,
+        first_pmt_date,
+        _amt_inputs,
+        True,
+        True,
     )
     return (pv, work_df, rf_df)
